@@ -171,3 +171,14 @@ EX) theme : 기본적으로 모든 색상들을 가지고 있는 Object.
 --> `ThemeProvider`를 통해 자식 컴포넌트(App)에 theme props를 넘길 수 있다.
 --> App.js에서 받은 theme props를 지정하면 index.js에서 theme props를 바꿀 때마다 같이 변경된다.
 
+
+* interface : typescript에서 props가 어떤건지 알려줄 때 쓰는 방식
+EX) 기초
+    interface CircleProps {
+        bgColor: string;
+    }
+
+    function Circle({bgColor} : CircleProps) {
+    return <Container />;
+    }
+--> Props를 위와같이 interface로 지정해주고 아래에서 props를 선언하면 `CircleProps` 거라고 typescript에게 알린다.

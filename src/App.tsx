@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import Circle from "./Circle";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,9 +16,10 @@ const Title = styled.h1`
 
 function App() {
   return (
-    <Wrapper>
-      <Title>Hell</Title>
-    </Wrapper>
+    <div>
+      <Circle bgColor="teal" />
+      <Circle bgColor="tomato" />
+    </div>
   );
 }
 
