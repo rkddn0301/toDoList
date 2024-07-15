@@ -17,8 +17,8 @@ const Title = styled.h1`
 function App() {
   return (
     <div>
-      <Circle bgColor="teal" />
-      <Circle bgColor="tomato" />
+      <Circle bgcolor="teal" bordercolor="black" />
+      <Circle bgcolor="tomato" text="yes I can!" />
     </div>
   );
 }

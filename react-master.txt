@@ -176,9 +176,11 @@ EX) theme : 기본적으로 모든 색상들을 가지고 있는 Object.
 EX) 기초
     interface CircleProps {
         bgColor: string;
+        borderColor?: string;
     }
 
     function Circle({bgColor} : CircleProps) {
     return <Container />;
     }
 --> Props를 위와같이 interface로 지정해주고 아래에서 props를 선언하면 `CircleProps` 거라고 typescript에게 알린다.
+--> `borderColor`와 같이 `?`을 넣어주면 무조건 해당 props를 입력하지 않아도 된다.
