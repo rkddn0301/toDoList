@@ -10,6 +10,9 @@
 - 새로 생성 : npx create-react-app my-app --template typescript
 - 기존 JavaScript CRA에서 생성 : npm install --save typescript @types/node @types/react @types/react-dom @types/jest
 
+* react-query 설치 : npm i react-router-dom react-query
++ typeScript 인식용 설치 : npm i --save-dev @types/react-router-dom
+
 
 ※ 용어
 
@@ -184,3 +187,5 @@ EX) 기초
     }
 --> Props를 위와같이 interface로 지정해주고 아래에서 props를 선언하면 `CircleProps` 거라고 typescript에게 알린다.
 --> `borderColor`와 같이 `?`을 넣어주면 무조건 해당 props를 입력하지 않아도 된다.
+
+ * react-query : 
