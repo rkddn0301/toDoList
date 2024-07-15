@@ -1,5 +1,5 @@
+import { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import Circle from "./Circle";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,10 +15,30 @@ const Title = styled.h1`
 `;
 
 function App() {
+  const [value, setValue] = useState("");
+  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
+    // TypeScript에서는 target >> currentTarget 을 이용한다.
+    const {
+      currentTarget: { value },
+    } = event;
+    setValue(value);
+  };
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log("hello", value);
+  };
   return (
     <div>
-      <Circle bgcolor="teal" bordercolor="black" />
-      <Circle bgcolor="tomato" text="yes I can!" />
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          placeholder="username"
+          onChange={onChange}
+          value={value}
+        />
+        <button>Log in</button>
+      </form>
     </div>
   );
 }
