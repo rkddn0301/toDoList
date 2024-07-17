@@ -174,6 +174,8 @@ EX) theme : 기본적으로 모든 색상들을 가지고 있는 Object.
 --> `ThemeProvider`를 통해 자식 컴포넌트(App)에 theme props를 넘길 수 있다.
 --> App.js에서 받은 theme props를 지정하면 index.js에서 theme props를 바꿀 때마다 같이 변경된다.
 
+* createGlobalStyle : styled-components에 있으며, 한 컴포넌트 스타일을 전역에 뿌려주는 메소드
+
 
 * interface : typescript에서 props가 어떤건지 알려줄 때 쓰는 방식
 EX) 기초
