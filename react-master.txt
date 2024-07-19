@@ -259,10 +259,27 @@ EX) const priceMatch = useRouteMatch("/:coinId/price");
 
   - const queryClient = new QueryClient(); : react-query 시작 client 생성
   - <QueryClientProvider client={queryClient}></QueryClient> : react-query 시작
+  - ReactQueryDevtools : useQuery를 통해 보관된 캐시를 볼 수 있는 툴
 
-  - useQuery(queryKey, options) : 고유 값인 queryKey와 이용 할 options을 넣어 반환해주는 Hook
+  - useQuery(queryKey, options) : 고유 값인 queryKey와 이용 할 options을 넣어 react-query 캐시에 보관해주는 Hook
   EX) 기본적인 사용
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   --> 고유값은 allCoins
   --> fetchCoins라는 데이터를 가져오는 동안 isLoading 작업을 진행.
   --> 가져오기에 성공하면 data에 해당 데이터를 넣어줌.
+  
+  EX) 여러 useQuery를 사용할 경우
+  const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
+    ["info", coinId],
+    () => fetchCoinInfo(coinId)
+  );
+  const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
+    ["tickers", coinId],
+    () => fetchCoinTickers(coinId)
+  );
+  --> {} 내부에 이름이 겹치지 않게 바꿀 수 있음.
+  --> queryKey의 경우 배열 형태로 구성되어 있음.
+  --> 내가 가져오려는 options이 parameter가 필요할 경우 지연된 함수 실행인 '() =>'가 필요함.
+
+  
+
