@@ -12,6 +12,7 @@
 
 * react-query 설치 : npm i react-router-dom react-query
 + typeScript 인식용 설치 : npm i --save-dev @types/react-router-dom
++ react 18버전 이상일 시 설치 : npm i @tanstack/react-query
 
 ※ 단축키
 
@@ -252,4 +253,16 @@ EX) const priceMatch = useRouteMatch("/:coinId/price");
 }
     
 
- * react-query : 
+ * react-query : 서버 상태를 쉽게 관리해주는 라이브러리.
+  ! react-query의 장점은 다른 페이지에 있다가 해당 페이지로 돌아온다 했을 때
+  useState는 리렌더링을 하지만 react-query는 리렌더링을 하지 않는다.
+
+  - const queryClient = new QueryClient(); : react-query 시작 client 생성
+  - <QueryClientProvider client={queryClient}></QueryClient> : react-query 시작
+
+  - useQuery(queryKey, options) : 고유 값인 queryKey와 이용 할 options을 넣어 반환해주는 Hook
+  EX) 기본적인 사용
+  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+  --> 고유값은 allCoins
+  --> fetchCoins라는 데이터를 가져오는 동안 isLoading 작업을 진행.
+  --> 가져오기에 성공하면 data에 해당 데이터를 넣어줌.
