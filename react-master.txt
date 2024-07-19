@@ -13,8 +13,23 @@
 * react-query 설치 : npm i react-router-dom react-query
 + typeScript 인식용 설치 : npm i --save-dev @types/react-router-dom
 
+※ 단축키
+
+ * 특정 텍스트 선택 : 원하는 텍스트를 드래그 후 Ctrl + d
+ * 선택한 모든 텍스트에 가장 우측 끝으로 포커싱 : Shift + Alt + i
+ * 현재 선택한 텍스트를 기준으로 우측 끝까지 문자열 선택 : Ctrl + Shift + →
 
 ※ 용어
+
+* @형식 Object : 'key-value' 쌍으로 이루어진 데이터 구조.
+ - key는 문자열이며, value는 문자열/숫자/배열/다른 객체 등 다양한 형식으로 구성 가능
+ - 주로 JavaScript에서 사용되며, JSON 형식에서도 동일한 개념으로 사용됨.
+ EX) Object 형식
+ let obj = {
+    "name" : "Alice",
+    "age" : 30,
+    "isStudent" : false
+ };
 
 * @문법 Pseudo Selector `${}` : JavaScript에서 사용하는 템플릿 리터럴 문법으로, 변수나 표현식을 문자열 내에 삽입하는데 사용.
 * @문법 Immediately Invoked Function Expression `(() => {...})()` : 함수를 정의하자마자 즉시 실행한다는 의미.
@@ -222,6 +237,7 @@ EX) 기초
         } = useLocation<RouteState>();
         console.log(state);
     }
+
     
 
  * react-query : 
