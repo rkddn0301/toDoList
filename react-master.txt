@@ -238,6 +238,18 @@ EX) 기초
         console.log(state);
     }
 
+* useRouteMatch : 특정한 URL에 있는지의 여부를 알려주는 Hook
+EX) const priceMatch = useRouteMatch("/:coinId/price");
+--> 해당 경로에 들어가면 console.log로 Object 데이터를 보여줌
+--> 결과 값 : 
+{
+    "path": "/:coinId/price",
+    "url": "/btc-bitcoin/price",
+    "isExact": true,
+    "params": {
+        "coinId": "btc-bitcoin"
+    }
+}
     
 
  * react-query : 

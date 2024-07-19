@@ -57,6 +57,7 @@ body {
 }
 a {
   text-decoration: none;
+  color: inherit; // 부모 요소의 텍스트 색상을 상속받음
 }
 `;
 

@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Route, Switch, useLocation, useParams } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Switch,
+  useLocation,
+  useParams,
+  useRouteMatch,
+} from "react-router-dom";
 import styled from "styled-components";
 import Price from "./Price";
 import Chart from "./Chart";
@@ -40,6 +47,35 @@ const OverviewItem = styled.div`
 
 const Description = styled.p`
   margin: 20px 0px;
+`;
+
+// grid-template-columns : grid에서 열(column)을 건드리겠다는 것.
+// repeat(1n,2n): 1n의 열로 나누어서, 2n 만큼 나누어진다는 것을 의미.
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(
+    2,
+    1fr
+  ); // 2열로 나누어 동일한 비율(1fr)로 나누어짐.
+  margin: 25px 0px;
+  gap: 10px;
+`;
+
+const Tab = styled.span<{ isActive: boolean }>`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 7px 0px;
+  border-radius: 10px;
+  // Chart, Price를 클릭할 때마다 Tab이 받는 prop(isActive)으로 theme을 동작시켜줌.
+  color: ${(props) =>
+    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  // 여기서 a는 Link Router를 의미함.
+  a {
+    display: block;
+  }
 `;
 
 const Title = styled.h1`
@@ -125,6 +161,10 @@ function Coin() {
   const { state } = useLocation<RouteState>();
   const [info, setInfo] = useState<InfoData>();
   const [priceInfo, setPriceInfo] = useState<PriceData>();
+  const priceMatch = useRouteMatch("/:coinId/price");
+  const chartMatch = useRouteMatch("/:coinId/chart");
+  console.log(priceMatch);
+  console.log(chartMatch);
   useEffect(() => {
     (async () => {
       const infoData = await (
@@ -175,6 +215,15 @@ function Coin() {
               <span>{priceInfo?.max_supply}</span>
             </OverviewItem>
           </Overview>
+          <Tabs>
+            <Tab isActive={chartMatch !== null}>
+              <Link to={`/${coinId}/chart`}>Chart</Link>
+            </Tab>
+            <Tab isActive={priceMatch !== null}>
+              <Link to={`/${coinId}/price`}>Price</Link>
+            </Tab>
+          </Tabs>
+
           <Switch>
             <Route path={`/${coinId}/price`}>
               <Price />
