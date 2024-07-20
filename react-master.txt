@@ -16,6 +16,9 @@
 
 * react-apexChart 설치 : npm install --save react-apexcharts apexcharts
 
+* react-helmet 설치 : npm i react-helmet
++ typeScript 인식용 설치 : npm i --save-dev @types/react-helmet
+
 ※ 단축키
 
  * 특정 텍스트 선택 : 원하는 텍스트를 드래그 후 Ctrl + d
@@ -263,7 +266,8 @@ EX) const priceMatch = useRouteMatch("/:coinId/price");
   - <QueryClientProvider client={queryClient}></QueryClient> : react-query 시작
   - ReactQueryDevtools : useQuery를 통해 보관된 캐시를 볼 수 있는 툴
 
-  - useQuery(queryKey, options) : 고유 값인 queryKey와 이용 할 options을 넣어 react-query 캐시에 보관해주는 Hook
+  - useQuery(queryKey, options, {Choice Object}) : 고유 값인 queryKey와 이용 할 options을 넣어 
+  react-query 캐시에 보관해주는 Hook이며 Choice Object와 같이 추가적으로 기능을 넣을 수 있다.
   EX) 기본적인 사용
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   --> 고유값은 allCoins
@@ -277,11 +281,22 @@ EX) const priceMatch = useRouteMatch("/:coinId/price");
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ["tickers", coinId],
-    () => fetchCoinTickers(coinId)
+    () => fetchCoinTickers(coinId),
+    {
+      refetchInterval: 5000,
+    }
   );
   --> {} 내부에 이름이 겹치지 않게 바꿀 수 있음.
   --> queryKey의 경우 배열 형태로 구성되어 있음.
   --> 내가 가져오려는 options이 parameter가 필요할 경우 지연된 함수 실행인 '() =>'가 필요함.
+  --> 두 번째 useQuery의 경우 3개의 요소가 들어가 있는데, 이 세 번째가 'Choice Object'의 기능이며, 5초마다 useQuery를 갱신해준다.
+
+  * react-helmet : HTML <head> 요소의 내용을 대신 관리해줌.
+  EX) 기본적인 사용
+      <Helmet>
+        <title>Coins</title>
+      </Helmet>
+      --> 이럴 경우 <head> 태그에 <title> 태그를 달은 것처럼 동작된다.(제목이 바뀜) 
 
   
 
