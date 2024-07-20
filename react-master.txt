@@ -14,6 +14,8 @@
 + typeScript 인식용 설치 : npm i --save-dev @types/react-router-dom
 + react 18버전 이상일 시 설치 : npm i @tanstack/react-query
 
+* react-apexChart 설치 : npm install --save react-apexcharts apexcharts
+
 ※ 단축키
 
  * 특정 텍스트 선택 : 원하는 텍스트를 드래그 후 Ctrl + d
