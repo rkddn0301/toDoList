@@ -51,7 +51,7 @@ function Chart({ coinId }: ChartProps) {
             },
 
             stroke: {
-              // 차트 라인 구성
+              // 차트 라인 모양 구성
               curve: "smooth",
               width: 3,
             },
@@ -70,10 +70,27 @@ function Chart({ coinId }: ChartProps) {
               axisTicks: {
                 show: false,
               },
+              type: "datetime",
+              categories: data?.map((price) =>
+                new Date(price.time_close * 1000).toISOString()
+              ),
             },
             yaxis: {
               // 세로 표시줄 구성
               show: false,
+            },
+            fill: {
+              // 차트 라인 색상 구성
+              type: "gradient",
+              gradient: { gradientToColors: ["blue"], stops: [0, 100] },
+            },
+            colors: ["red"],
+
+            tooltip: {
+              // 차트 정보 상자 스타일 및 동작 구성
+              y: {
+                formatter: (value) => `$${value.toFixed(2)}`,
+              },
             },
           }}
         />
