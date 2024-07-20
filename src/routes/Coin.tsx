@@ -20,6 +20,11 @@ const Container = styled.div`
   margin: 0 auto; // 중앙 유지
 `;
 
+const HomeBtn = styled.div`
+  margin-top: 10px;
+  font-size: 20px;
+`;
+
 const Header = styled.header`
   height: 15vh;
   display: flex;
@@ -82,6 +87,7 @@ const Tab = styled.span<{ isActive: boolean }>`
 `;
 
 const Title = styled.h1`
+  font-size: 50px;
   color: ${(props) => props.theme.accentColor};
 `;
 
@@ -125,7 +131,7 @@ interface InfoData {
   last_data_at: string;
 }
 
-interface PriceData {
+export interface PriceData {
   id: string;
   name: string;
   symbol: string;
@@ -169,10 +175,7 @@ function Coin() {
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ["tickers", coinId],
-    () => fetchCoinTickers(coinId),
-    {
-      refetchInterval: 5000,
-    }
+    () => fetchCoinTickers(coinId)
   );
   /*  const [loading, setLoading] = useState(true);
   const [info, setInfo] = useState<InfoData>();
@@ -201,6 +204,11 @@ function Coin() {
           {state?.name ? state.name : loading ? "Loading" : infoData?.name}
         </title>
       </Helmet>
+
+      <HomeBtn>
+        <Link to="/">Home</Link>
+      </HomeBtn>
+
       <Header>
         <Title>
           {state?.name ? state.name : loading ? "Loading" : infoData?.name}
@@ -246,7 +254,7 @@ function Coin() {
 
           <Switch>
             <Route path={`/:coinId/price`}>
-              <Price />
+              <Price coinId={coinId} tickersData={tickersData} />
             </Route>
             <Route path={`/:coinId/chart`}>
               <Chart coinId={coinId} />

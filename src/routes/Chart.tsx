@@ -31,12 +31,22 @@ function Chart({ coinId }: ChartProps) {
         "Loading chart..."
       ) : (
         <ApexChart
-          type="line" // 차트 종류
+          type="candlestick" // 차트 종류
           series={[
-            // 차트 라인 데이터 구성
+            // 라인 데이터 구성
             {
               name: "Price",
-              data: data?.map((price) => Number(price.close)) as number[],
+              data: data
+                ? data.map((price) => ({
+                    x: new Date(price.time_close * 1000).toISOString(),
+                    y: [
+                      Number(price.open),
+                      Number(price.high),
+                      Number(price.low),
+                      Number(price.close),
+                    ],
+                  }))
+                : [],
             },
           ]}
           options={{
@@ -57,7 +67,7 @@ function Chart({ coinId }: ChartProps) {
             stroke: {
               // 차트 라인 모양 구성
               curve: "smooth",
-              width: 3,
+              width: 1,
             },
             grid: {
               // 차트 라인 그리드 구성
