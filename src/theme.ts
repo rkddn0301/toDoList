@@ -1,8 +1,16 @@
 import { DefaultTheme } from "styled-components";
 
 // 컬러 출처 : https://flatuicolors.com/palette/gb
-export const theme: DefaultTheme = {
+export const darkTheme: DefaultTheme = {
   bgColor: "#2f3640",
-  textColor: "#f5f6fa",
+  textColor: "white",
   accentColor: "#4cd137",
+  cardBgColor: "transparent",
+};
+
+export const lightTheme: DefaultTheme = {
+  bgColor: "whitesmoke",
+  textColor: "black",
+  accentColor: "#4cd137",
+  cardBgColor: "white",
 };
