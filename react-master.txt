@@ -299,5 +299,9 @@ EX) const priceMatch = useRouteMatch("/:coinId/price");
       </Helmet>
       --> 이럴 경우 <head> 태그에 <title> 태그를 달은 것처럼 동작된다.(제목이 바뀜) 
 
-  
+* recoil : state를 직접 관리하여 이용하고 싶을 때 바로 state를 가져갈 수 있는 용도
+EX) 기본 적인 state 이동 방식 App --> Chart
+App --> Router --> Coin --> Chart
+--> 위와 같이 자식인 컴포넌트에 props로 단계별 전달해야만 하위 컴포넌트인 Chart가 받을 수 있었다.
+
 
