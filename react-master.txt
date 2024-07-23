@@ -19,6 +19,8 @@
 * react-helmet 설치 : npm i react-helmet
 + typeScript 인식용 설치 : npm i --save-dev @types/react-helmet
 
+* recoil 설치 : npm i recoil
+
 ※ 단축키
 
  * 특정 텍스트 선택 : 원하는 텍스트를 드래그 후 Ctrl + d
@@ -300,8 +302,36 @@ EX) const priceMatch = useRouteMatch("/:coinId/price");
       --> 이럴 경우 <head> 태그에 <title> 태그를 달은 것처럼 동작된다.(제목이 바뀜) 
 
 * recoil : state를 직접 관리하여 이용하고 싶을 때 바로 state를 가져갈 수 있는 용도
+ - RecoilRoot : recoil을 이용하려는 컴포넌트의 최상위 컴포넌트 쪽에 사용.
+ - atom : 모든 곳에 사용하려는 state 값
+ - useRecoilValue : 만들어 놓은 atom을 불러와주는 Hook
+
 EX) 기본 적인 state 이동 방식 App --> Chart
 App --> Router --> Coin --> Chart
 --> 위와 같이 자식인 컴포넌트에 props로 단계별 전달해야만 하위 컴포넌트인 Chart가 받을 수 있었다.
 
+EX) recoil 이용
+> atoms.ts
+    import { atom } from "recoil";
+
+    export const isDarkAtom = atom({
+        key: "isDark",
+        default: false,
+    });
+    --> key(state)와 default를 지정
+
+> App.tsx
+    function App() {
+        const isDark = useRecoilValue(isDarkAtom);
+        return (
+            <>
+            <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+                <GlobalStyle />
+                <Router />
+                <ReactQueryDevtools initialIsOpen={true} />
+            </ThemeProvider>
+            </>
+        );
+    }
+    --> useRecoilValue로 atoms.ts에 있는 isDarkAtom을 불러와 변수(isDark)로 변경 후 theme에 이용
 

@@ -2,20 +2,17 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Coin from "./Coin";
 import Coins from "./Coins";
 
-interface IRouterProps {
-  toggleDark: () => void; // 함수의 기본적인 타입
-  isDark: boolean;
-}
+interface IRouterProps {}
 
-function Router({ toggleDark, isDark }: IRouterProps) {
+function Router() {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/:coinId">
-          <Coin isDark={isDark} />
+          <Coin />
         </Route>
         <Route path="/">
-          <Coins toggleDark={toggleDark} />
+          <Coins />
         </Route>
       </Switch>
     </BrowserRouter>
