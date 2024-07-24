@@ -37,6 +37,7 @@ interface IForm {
   name: string;
   passWord: string;
   passWord1: string;
+  extraError?: string;
 }
 
 function ToDoList() {
@@ -44,15 +45,22 @@ function ToDoList() {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<IForm>({
     defaultValues: {
       email: "@naver.com",
     },
   });
-  const onValid = (data: any) => {
-    console.log(data);
+  const onValid = (data: IForm) => {
+    if (data.passWord !== data.passWord1) {
+      setError(
+        "passWord1",
+        { message: "Password are not the same" },
+        { shouldFocus: true } // 에러 발생 시 반드시 해당 구간 포커스
+      );
+    }
   };
-  console.log(errors.email?.message);
+
   /*
    * onChange : 태그 안에서 바뀌는 동작
    * onFocus : 태그 안을 클릭했을 때 깜빡임
@@ -83,7 +91,15 @@ function ToDoList() {
         />
         <span>{errors.userName?.message}</span>
         <input
-          {...register("name", { required: "Write Here" })}
+          {...register("name", {
+            required: "Write Here",
+            validate: {
+              noNico: (value) =>
+                value.includes("nico") ? "no nicos allowed" : true, // 확인절차이며, includes는 포함될 때를 말함
+              noNick: (value) =>
+                value.includes("nick") ? "no nicos allowed" : true,
+            },
+          })}
           placeholder="Write a name"
         />
         <span>{errors.name?.message}</span>
@@ -103,7 +119,6 @@ function ToDoList() {
           placeholder="Write a passwWord1"
         />
         <span>{errors.passWord1?.message}</span>
-
         <button>Add</button>
       </form>
     </div>

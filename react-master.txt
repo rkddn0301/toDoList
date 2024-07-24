@@ -352,6 +352,7 @@ EX) atom 변경
     - watch : form 입력 값들의 변화를 관찰해주는 함수.
     - handleSubmit(유효 및 필수 데이터, 비유효 및 필수아닌 데이터) : form 에 있는 내용을 제출하는 함수.
     - formState: `isDirty(기본값에서 변경여부)`, `isValid(유효성)`, `errors(오류)`등의 속성을 통해 폼의 상태를 확인.
+    - setError: 오류를 일으키는 기능
 
 EX) 기본 예시
   const { register, watch, handleSubmit } = useForm();
