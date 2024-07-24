@@ -21,6 +21,8 @@
 
 * recoil 설치 : npm i recoil
 
+* react-hook-form 설치 : npm i react-hook-form
+
 ※ 단축키
 
  * 특정 텍스트 선택 : 원하는 텍스트를 드래그 후 Ctrl + d
@@ -340,4 +342,25 @@ EX) atom 변경
     const setterFn = useSetRecoilState(isDarkAtom)
     --> <button onClick={() => setterFn((prev) => !prev)}>Toggle Mode</button>
 
+* react-hook-form : form을 이용하는 작업을 용이하게 해주는 라이브러리.
+  - useForm : 폼의 상태와 유효성 검사를 관리하는 Hook.
+    - register : 폼 요소를 react-hook-form에 등록하여 해당 요소의 값을 폼 상태로 관리할 수 있게함.
+    - watch : form 입력 값들의 변화를 관찰해주는 함수.
 
+EX) 기본 예시
+const { register, watch } = useForm();
+  console.log(watch());
+  return (
+    <div>
+      <form>
+        <input {...register("email")} placeholder="Write a email" />
+        <input {...register("userName")} placeholder="Write a userName" />
+        <input {...register("name")} placeholder="Write a name" />
+        <input {...register("passWord")} placeholder="Write a passWord" />
+        <input {...register("passWord1")} placeholder="Write a passwWord1" />
+        <button>Add</button>
+      </form>
+    </div>
+  );
+  --> register를 통해 기본적인 입력 로직 추가(...register)
+  --> watch를 통해 실시간 입력현황 확인
