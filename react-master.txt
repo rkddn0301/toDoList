@@ -346,18 +346,24 @@ EX) atom 변경
   - useForm : 폼의 상태와 유효성 검사를 관리하는 Hook.
     - register : 폼 요소를 react-hook-form에 등록하여 해당 요소의 값을 폼 상태로 관리할 수 있게함.
     - watch : form 입력 값들의 변화를 관찰해주는 함수.
+    - handleSubmit(유효 및 필수 데이터, 비유효 및 필수아닌 데이터) : form 에 있는 내용을 제출하는 함수.
+    - formState: `isDirty(기본값에서 변경여부)`, `isValid(유효성)`, `errors(오류)`등의 속성을 통해 폼의 상태를 확인.
 
 EX) 기본 예시
-const { register, watch } = useForm();
+  const { register, watch, handleSubmit } = useForm();
+  const onValid = (data: any) => {
+    console.log(data);
+  };
   console.log(watch());
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit(onValid)}>
         <input {...register("email")} placeholder="Write a email" />
         <input {...register("userName")} placeholder="Write a userName" />
         <input {...register("name")} placeholder="Write a name" />
         <input {...register("passWord")} placeholder="Write a passWord" />
         <input {...register("passWord1")} placeholder="Write a passwWord1" />
+
         <button>Add</button>
       </form>
     </div>
