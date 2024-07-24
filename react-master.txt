@@ -56,6 +56,10 @@ useEffect(() => {
   }, []);
   --> 비동기 함수로 생성된 내용을 즉시 실행하는 부분
 
+* @문법 : 정규식 : 문자열에서 특정 패턴을 찾거나 일치시키기 위한 규칙을 정의한 표현식.
+EX) /^[A-Za-z0-9._%+-]+@naver.com$/ 정규식 해석
+--> A-Z, a-z : 영문자 / 0-9 : 숫자 / ._%+- : 각각 필요함 / $ : @naver.com으로 끝나는 것
+
 * @컴포넌트 styled-components : React 식 CSS
 EX) styled 기초
     const Father = styled.div`

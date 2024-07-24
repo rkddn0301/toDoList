@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { useForm } from "react-hook-form";
+import { StringLiteral } from "typescript";
 
 /* function ToDoList() {
   const [toDo, setToDo] = useState("");
@@ -30,12 +31,28 @@ import { useForm } from "react-hook-form";
   );
 } */
 
+interface IForm {
+  email: string;
+  userName: string;
+  name: string;
+  passWord: string;
+  passWord1: string;
+}
+
 function ToDoList() {
-  const { register, handleSubmit, formState } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForm>({
+    defaultValues: {
+      email: "@naver.com",
+    },
+  });
   const onValid = (data: any) => {
     console.log(data);
   };
-  console.log(formState.errors);
+  console.log(errors.email?.message);
   /*
    * onChange : 태그 안에서 바뀌는 동작
    * onFocus : 태그 안을 클릭했을 때 깜빡임
@@ -49,21 +66,32 @@ function ToDoList() {
       >
         {/* register 안에 required를 넣는 이유는 보안상으로 안전하기 때문 */}
         <input
-          {...register("email", { required: true })}
+          {...register("email", {
+            required: "Email is required.",
+            pattern: {
+              value: /^[A-Za-z0-9._%+-]+@naver.com$/,
+              message: "Only naver.com emails allowed",
+            },
+          })}
           placeholder="Write a email"
         />
+        <span>{errors.email?.message}</span>
+
         <input
-          {...register("userName", { required: true, minLength: 10 })}
+          {...register("userName", { required: "Write Here", minLength: 10 })}
           placeholder="Write a userName"
         />
+        <span>{errors.userName?.message}</span>
         <input
-          {...register("name", { required: true })}
+          {...register("name", { required: "Write Here" })}
           placeholder="Write a name"
         />
+        <span>{errors.name?.message}</span>
         <input
-          {...register("passWord", { required: true, minLength: 5 })}
+          {...register("passWord", { required: "Write Here", minLength: 5 })}
           placeholder="Write a passWord"
         />
+        <span>{errors.passWord?.message}</span>
         <input
           {...register("passWord1", {
             required: "Password is required",
@@ -74,6 +102,7 @@ function ToDoList() {
           })}
           placeholder="Write a passwWord1"
         />
+        <span>{errors.passWord1?.message}</span>
 
         <button>Add</button>
       </form>
