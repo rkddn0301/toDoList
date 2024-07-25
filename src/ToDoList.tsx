@@ -8,33 +8,13 @@ import {
   useSetRecoilState,
 } from "recoil";
 import { StringLiteral } from "typescript";
-
-interface IForm {
-  toDo: string;
-}
-
-interface IToDo {
-  text: string;
-  id: number;
-  category: "TO_DO" | "DOING" | "DONE";
-}
-
-const toDoState = atom<IToDo[]>({
-  key: "toDo",
-  default: [],
-});
+import CreateToDo from "./components/CreateToDo";
+import { toDoState } from "./atoms";
+import ToDo from "./components/ToDo";
 
 function ToDoList() {
-  const [toDos, setToDos] = useRecoilState(toDoState);
-  const { register, handleSubmit, setValue } = useForm<IForm>({});
-  const onValid = ({ toDo }: IForm) => {
-    console.log("add to do", toDo);
-    setToDos((oldToDos) => [
-      { text: toDo, id: Date.now(), category: "TO_DO" },
-      ...oldToDos,
-    ]);
-    setValue("toDo", "");
-  };
+  const toDos = useRecoilValue(toDoState);
+
   console.log(toDos);
   /*
    * onChange : 태그 안에서 바뀌는 동작
@@ -45,22 +25,11 @@ function ToDoList() {
     <div>
       <h1>To Dos</h1>
       <hr />
-      <form
-        style={{ display: "flex", flexDirection: "column" }}
-        onSubmit={handleSubmit(onValid)}
-      >
-        {/* register 안에 required를 넣는 이유는 보안상으로 안전하기 때문 */}
-        <input
-          {...register("toDo", {
-            required: "toDo is required.",
-          })}
-          placeholder="Write a toDO"
-        />
-        <button>Add</button>
-      </form>
+      <CreateToDo />
+      {/* {...toDo}는 props를 받는 자식 컴포넌트가 같은 interface 타입일 때 사용 가능 */}
       <ul>
         {toDos.map((toDo) => (
-          <li key={toDo.id}>{toDo.text}</li>
+          <ToDo key={toDo.id} {...toDo} />
         ))}
       </ul>
     </div>
