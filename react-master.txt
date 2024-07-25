@@ -399,7 +399,7 @@ EX) 기본 예시
   --> register를 통해 기본적인 입력 로직 추가(...register)
   --> watch를 통해 실시간 입력현황 확인
 
-  * Array 적용 및 즉시 출력 방안
+* Array 적용 및 즉시 출력 방안
   EX) 내가 원하는 객체를 등록하고 Array를 즉시 출력 시킬 때
   const onValid = ({ toDo }: IForm) => {
     console.log("add to do", toDo);
@@ -431,3 +431,21 @@ EX) 기본 예시
   --> ...oldToDos.slice(0, targetIndex) : 내가 선택한 배열 번호의 앞쪽 배열을 보여줌.
   --> newToDo: 내가 변경한 내용을 반영
   --> ...oldToDos.slice(targetIndex + 1) : 내가 선택한 배열 번호의 뒤쪽 배열을 보여줌.(targetIndex + 1을 안하면 내가 선택한 배열도 포함됨)
+
+* enum : 열거형의 줄임말로, 특정 값들의 집합에 이름을 부여한 타입.
+
+EX) 기본 예시
+
+export enum Categories {
+  "TO_DO" = "TO_DO",
+  "DOING" = "DOING",
+  "DONE" = "DONE",
+}
+
+export const categoryState = atom<Categories>({
+  key: "category",
+  default: Categories.TO_DO,
+});
+
+--> "TO_DO"가 string이 아닌 그냥 "TO_DO" 자체가 타입이라는 걸 enum에서 알림
+--> enum을 가지고 형식처럼 사용
