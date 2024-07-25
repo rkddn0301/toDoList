@@ -377,3 +377,25 @@ EX) 기본 예시
   );
   --> register를 통해 기본적인 입력 로직 추가(...register)
   --> watch를 통해 실시간 입력현황 확인
+
+  * Array 적용 및 즉시 출력 방안
+  EX) 기본 예시
+  const onClick = (newCategory: IToDo["category"]) => {
+    console.log("I wanna to ", newCategory);
+    setToDos((oldToDos) => {
+      // findIndex : 배열 내부에 index를 찾아주며, 아래 코드와 같이 조건부에 따라 특정 index를 가져올 수 있다.
+      const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
+      const oldToDo = oldToDos[targetIndex];
+      const newToDo = { text, id, category: newCategory };
+
+      return [
+        ...oldToDos.slice(0, targetIndex),
+        newToDo,
+        ...oldToDos.slice(targetIndex + 1),
+      ];
+    });
+  };
+  --> targetIndex는 내가 선택한 배열 번호이며, 이 변수를 이용하여 return에서 새로 반영할 수 있다.
+  --> ...oldToDos.slice(0, targetIndex) : 내가 선택한 배열 번호의 앞쪽 배열을 보여줌.
+  --> newToDo: 내가 변경한 내용을 반영
+  --> ...oldToDos.slice(targetIndex + 1) : 내가 선택한 배열 번호의 뒤쪽 배열을 보여줌.(targetIndex + 1을 안하면 내가 선택한 배열도 포함됨)
