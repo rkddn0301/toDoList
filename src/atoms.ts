@@ -1,4 +1,8 @@
 import { atom, selector } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+// recoilPersist 생성
+const { persistAtom } = recoilPersist();
 
 export enum Categories {
   "TO_DO" = "TO_DO",
@@ -12,9 +16,15 @@ export interface IToDo {
   category: Categories;
 }
 
+/* 
+ * effects_UNSTABLE : atom에 부작용을 추가할 수 있는 기능.
+ 따라서 atom에 변화가 있을 경우 특정 작업을 수행할 수 있다는 의미.
+*/
+
 export const toDoState = atom<IToDo[]>({
   key: "toDo",
-  default: [],
+  default: [], // 이 default를 확인하기 전에 먼저 persistAtom이 localStorage에 값이 있는지 확인한다.
+  effects_UNSTABLE: [persistAtom], // 변화가 있을 때마다 effects_UNSTABLE에서 persistAtom을 호출하여 recoilPersist의 기능을 이용한다.
 });
 
 export const categoryState = atom<Categories>({
