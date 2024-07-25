@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 
 export interface IToDo {
   text: string;
@@ -9,4 +9,17 @@ export interface IToDo {
 export const toDoState = atom<IToDo[]>({
   key: "toDo",
   default: [],
+});
+
+export const toDoSelector = selector({
+  key: "toDoSelector",
+  get: ({ get }) => {
+    const toDos = get(toDoState);
+    // filter : 기존 배열 형식 내부에서 원하는 조건으로 찾아와 배열로 다시 반환
+    return [
+      toDos.filter((toDo) => toDo.category === "TO_DO"),
+      toDos.filter((toDo) => toDo.category === "DOING"),
+      toDos.filter((toDo) => toDo.category === "DONE"),
+    ];
+  },
 });

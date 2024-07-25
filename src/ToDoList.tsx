@@ -9,13 +9,12 @@ import {
 } from "recoil";
 import { StringLiteral } from "typescript";
 import CreateToDo from "./components/CreateToDo";
-import { toDoState } from "./atoms";
+import { toDoSelector, toDoState } from "./atoms";
 import ToDo from "./components/ToDo";
 
 function ToDoList() {
-  const toDos = useRecoilValue(toDoState);
+  const [toDo, doing, done] = useRecoilValue(toDoSelector);
 
-  console.log(toDos);
   /*
    * onChange : 태그 안에서 바뀌는 동작
    * onFocus : 태그 안을 클릭했을 때 깜빡임
@@ -26,9 +25,26 @@ function ToDoList() {
       <h1>To Dos</h1>
       <hr />
       <CreateToDo />
+      <h2>To Do</h2>
       {/* {...toDo}는 props를 받는 자식 컴포넌트가 같은 interface 타입일 때 사용 가능 */}
       <ul>
-        {toDos.map((toDo) => (
+        {toDo.map((toDo) => (
+          <ToDo key={toDo.id} {...toDo} />
+        ))}
+      </ul>
+      <hr />
+      <h2>Doing</h2>
+
+      <ul>
+        {doing.map((toDo) => (
+          <ToDo key={toDo.id} {...toDo} />
+        ))}
+      </ul>
+      <hr />
+      <h2>Done</h2>
+
+      <ul>
+        {done.map((toDo) => (
           <ToDo key={toDo.id} {...toDo} />
         ))}
       </ul>

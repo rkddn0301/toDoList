@@ -313,6 +313,7 @@ EX) const priceMatch = useRouteMatch("/:coinId/price");
  - useRecoilValue(atom) : 만들어 놓은 atom을 불러와주는 Hook
  - useSetRecoilState(atom) : atom의 기본값을 변경해주는 Hook
  - useRecoilState(atom) : useState와 유사하며, 전역적으로 상태를 공유하고 관리하는 것에 차이가 있음.
+ - Selector : state를 입력 받아 변형하여 반환된 값인 derived state를 나타내줌. 또는 atom의 출력을 변형시키는 도구
 
 EX) 기본 적인 state 이동 방식 App --> Chart
 App --> Router --> Coin --> Chart
@@ -347,6 +348,26 @@ EX) atom 변경
     const setterFn = useSetRecoilState(isDarkAtom)
     --> <button onClick={() => setterFn((prev) => !prev)}>Toggle Mode</button>
 
+EX) selector 이용
+    export const toDoState = atom<IToDo[]>({
+        key: "toDo",
+        default: [],
+    });
+
+    export const toDoSelector = selector({
+        key: "toDoSelector",
+        get: ({ get }) => {
+            const toDos = get(toDoState);
+            // filter : 기존 배열 형식 내부에서 원하는 조건으로 찾아와 배열로 다시 반환
+            return [
+            toDos.filter((toDo) => toDo.category === "TO_DO"),
+            toDos.filter((toDo) => toDo.category === "DOING"),
+            toDos.filter((toDo) => toDo.category === "DONE"),
+            ];
+        },
+    });
+    --> atom(toDoState)을 만들어 selector에서 변환되어 출력된다는 것을 알 수 있다.
+
 * react-hook-form : form을 이용하는 작업을 용이하게 해주는 라이브러리.
   - useForm : 폼의 상태와 유효성 검사를 관리하는 Hook.
     - register : 폼 요소를 react-hook-form에 등록하여 해당 요소의 값을 폼 상태로 관리할 수 있게함.
@@ -379,7 +400,18 @@ EX) 기본 예시
   --> watch를 통해 실시간 입력현황 확인
 
   * Array 적용 및 즉시 출력 방안
-  EX) 기본 예시
+  EX) 내가 원하는 객체를 등록하고 Array를 즉시 출력 시킬 때
+  const onValid = ({ toDo }: IForm) => {
+    console.log("add to do", toDo);
+    setToDos((oldToDos) => [
+      { text: toDo, id: Date.now(), category: "TO_DO" },
+      ...oldToDos,
+    ]);
+    setValue("toDo", "");
+  };
+  --> setToDos를 보면 내가 원하는 객체({})를 등록한 다음에 기존 배열(...oldToDos)에 넣는 걸 알 수 있다.
+
+  EX) Array 내부에 있는 내용을 일부 수정했을 때
   const onClick = (newCategory: IToDo["category"]) => {
     console.log("I wanna to ", newCategory);
     setToDos((oldToDos) => {
