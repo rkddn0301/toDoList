@@ -1,20 +1,48 @@
-import { useState } from "react";
-
-import { useForm } from "react-hook-form";
-import {
-  atom,
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-} from "recoil";
-import { StringLiteral } from "typescript";
+// Todo 방 자체를 전부 보여주는 최상위 컴포넌트
+import { useRecoilValue } from "recoil";
 import CreateToDo from "./components/CreateToDo";
-import { Categories, categoryState, toDoSelector, toDoState } from "./atoms";
+import { categoryState, toDoState } from "./atoms";
 import ToDo from "./components/ToDo";
 import SelectToDo from "./components/SelectToDo";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+`;
+
+const Layout = styled.div`
+  margin: 0 auto;
+  width: 50%;
+
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid white;
+  border-radius: 15px;
+  padding: 20px;
+`;
+
+const Title = styled.h1`
+  font-size: 36px;
+  color: ${(props) => props.theme.textColor};
+`;
+
+const ToDoUl = styled.ul`
+  border: 1px solid grey;
+  border-radius: 15px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
 function ToDoList() {
-  const toDos = useRecoilValue(toDoSelector);
+  const toDos = useRecoilValue(toDoState);
+  const selectedCategory = useRecoilValue(categoryState);
 
   /*
    * onChange : 태그 안에서 바뀌는 동작
@@ -22,75 +50,22 @@ function ToDoList() {
    * onBlur : onFocus 상태가 아닌 것
    */
   return (
-    <div>
-      <div>
-        <h1>To Dos</h1>
-        <hr />
+    <Wrapper>
+      <Layout>
+        <Title>To Dos</Title>
 
         <SelectToDo />
         <CreateToDo />
-        <ul>
-          {toDos?.map((toDo) => (
-            <ToDo key={toDo.id} {...toDo} />
-          ))}
-        </ul>
-      </div>
-    </div>
+        {toDos[selectedCategory].length !== 0 ? (
+          <ToDoUl>
+            {toDos[selectedCategory].map((toDo) => (
+              <ToDo key={toDo.id} {...toDo} />
+            ))}
+          </ToDoUl>
+        ) : null}
+      </Layout>
+    </Wrapper>
   );
 }
 
 export default ToDoList;
-
-/* 아래 코드는 일반 useState로 진행 했을 때이다.
-interface IToDo {
-  text: string;
-  id: number;
-  category: "TO_DO" | "DOING" | "DONE";
-}
-
-  function ToDoList() {
-    const [toDo, setToDo] = useState("");
-  
-    const [toDos, setToDos] = useState<IToDo[]>([]);
-  
-    const changeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-      setToDo(e.currentTarget.value);
-    };
-  
-    const onValid = (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      setToDos((oldToDos) => [
-        { text: toDo, id: Date.now(), category: "TO_DO" },
-        ...oldToDos,
-      ]);
-      console.log(toDo);
-    };
-  
-
-    return (
-      <div>
-        <h1>To Dos</h1>
-        <hr />
-        <form
-          style={{ display: "flex", flexDirection: "column" }}
-          onSubmit={onValid}
-        >
-
-          <input
-            value={toDo}
-            onChange={changeHandler}
-            placeholder="Write a toDO"
-          />
-          <button>Add</button>
-        </form>
-        <h2>To Do</h2>
-        
-        <ul>
-        {...toDo}는 props를 받는 자식 컴포넌트가 같은 interface 타입일 때 사용 가능
-          {toDos.map((toDo) => (
-            <ToDo key={toDo.id} {...toDo} />
-          ))}
-        </ul>
-      </div>
-    );
-  } */
